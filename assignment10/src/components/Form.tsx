@@ -63,9 +63,9 @@ const Form = ({ data, setData, setShowData }: {
                 <label className="cursor-pointer text-sm text-slate-200" htmlFor="skills">Skillset</label>
                 <select className="p-3 bg-[#181818] text-white rounded-lg focus:outline-0 w-full" id="skills" name="skills" aria-label="Skillset" value={data.skills} onChange={handleChange} required>
                     <option value="">Select an option</option>
-                    <option value="react">Frontend</option>
-                    <option value="vue">Backend</option>
-                    <option value="angular">FullStack</option>
+                    <option value="Frontend">Frontend</option>
+                    <option value="Backend">Backend</option>
+                    <option value="FullStack">FullStack</option>
                 </select>
             </div>
             <div className="w-full flex flex-col gap-1">
