@@ -50,11 +50,11 @@ const Form = ({ data, setData, setShowData }: {
                 <label className="text-slate-200">Gender</label>
                 <div className="flex gap-4">
                     <label className="cursor-pointer flex items-center gap-2 text-slate-200">
-                        <input type="radio" className="accent-[#ff9800]" name="gender" value="male" checked={data.gender === "male"} onChange={handleChange} required />
+                        <input type="radio" className="accent-[#ff9800]" name="gender" value="Male" checked={data.gender === "Male"} onChange={handleChange} required />
                         Male
                     </label>
                     <label className="cursor-pointer flex items-center gap-2 text-slate-200">
-                        <input type="radio" className="accent-[#ff9800]" name="gender" value="female" checked={data.gender === "female"} onChange={handleChange} required />
+                        <input type="radio" className="accent-[#ff9800]" name="gender" value="Female" checked={data.gender === "Female"} onChange={handleChange} required />
                         Female
                     </label>
                 </div>
