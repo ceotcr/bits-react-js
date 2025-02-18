@@ -1,34 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react"
+import CreateTodo from "./components/CreateTodo"
+import Todos from "./components/Todos"
+import { ITodo } from "./libs/interfaces"
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [todos, setTodos] = useState<ITodo[]>([])
+  const [isLoaded, setIsLoaded] = useState(false)
 
+  useEffect(() => {
+    if (!isLoaded) {
+      const data = localStorage.getItem('todos')
+      if (data) {
+        setTodos(JSON.parse(data))
+      }
+      setIsLoaded(true)
+    }
+    else {
+      localStorage.setItem('todos', JSON.stringify(todos))
+    }
+  }, [todos, isLoaded])
+
+  useEffect(() => {
+    const pending = todos.filter((todo) => !todo.isDone).length
+    if (pending === 0) document.title = 'Todo App'
+    else document.title = `${pending} task${pending > 1 ? "s" : ""} pending`
+  }, [todos])
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <main className="flex flex-col items-center max-w-[1440px] mx-auto gap-4 min-h-screen pt-32">
+      <CreateTodo setTodos={setTodos} />
+      <Todos todos={todos} setTodos={setTodos} />
+    </main>
   )
 }
 
