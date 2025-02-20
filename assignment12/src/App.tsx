@@ -11,15 +11,25 @@ const App = () => {
   const [selectedPost, setSelectedPost] = useState<IPost | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  useEffect(() => {
+
+
+  const getPosts = async () => {
     setLoading(true)
-    getAllPosts().then((data) => {
+    try {
+      const data = await getAllPosts()
       setPosts(data)
-    }).catch((err) => {
-      setError(err.message)
-    }).finally(() => {
-      setLoading(false)
-    })
+    } catch (err) {
+      setError((err as Error).message)
+      setTimeout(() => {
+        setError(null)
+      }, 2000)
+    }
+    setLoading(false)
+  }
+
+
+  useEffect(() => {
+    getPosts()
 
     return () => {
       setPosts(null)
@@ -31,7 +41,7 @@ const App = () => {
   return (
     <div className="p-4 max-w-[1440px] w-full flex flex-col mx-auto gap-8">
       <NewPost setPosts={setPosts} />
-      <PostsByUser setPosts={setPosts} />
+      <PostsByUser getAllPosts={getPosts} setPosts={setPosts} />
       {loading && <p className='w-full text-center'>Loading...</p>}
       {error && <p className='w-full text-center text-red-300'>{error}</p>}
       {posts && (

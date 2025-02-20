@@ -38,7 +38,7 @@ const NewPost = ({ setPosts }: { setPosts: React.Dispatch<React.SetStateAction<I
             setError("All fields are required")
             setTimeout(() => {
                 setError(null)
-            }, 3000)
+            }, 2000)
             setLoading(false)
             return
         }
@@ -59,13 +59,12 @@ const NewPost = ({ setPosts }: { setPosts: React.Dispatch<React.SetStateAction<I
             setSuccess(true)
             setTimeout(() => {
                 setSuccess(false)
-            }, 3000)
-        } catch (err: unknown) {
-            if (err instanceof Error) {
-                setError(err.message)
-            } else {
-                setError("An unknown error occurred")
-            }
+            }, 2000)
+        } catch (err) {
+            setError((err as Error).message)
+            setTimeout(() => {
+                setError(null)
+            }, 2000)
         }
         finally {
             setLoading(false)
