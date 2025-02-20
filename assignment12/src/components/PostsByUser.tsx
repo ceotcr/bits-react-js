@@ -47,7 +47,16 @@ const PostsByUser = ({ setPosts, getAllPosts }: { getAllPosts: () => Promise<voi
                 <input type="number" placeholder="Get Posts by UserID" className="p-4 rounded-lg focus:outline-none w-full" value={userId === -1 ? "" : userId} onChange={handleChange} />
                 <button type="submit" className="p-2 bg-blue-500 text-white rounded-lg whitespace-nowrap cursor-pointer hover:bg-blue-600"
                 >Get posts</button>
-                <button type="button" onClick={getAllPosts} className="p-2 bg-blue-500 text-white rounded-lg whitespace-nowrap cursor-pointer hover:bg-blue-600"
+                <button type="button" onClick={
+                    async () => {
+                        setLoading(true)
+                        setError(null)
+                        setPosts(null)
+                        setUserId(-1)
+                        await getAllPosts()
+                        setLoading(false)
+                    }
+                } className="p-2 bg-blue-500 text-white rounded-lg whitespace-nowrap cursor-pointer hover:bg-blue-600"
                 ><MdRefresh size={32} /></button>
             </form>
             {loading && <p className="w-full text-center">Loading...</p>}
