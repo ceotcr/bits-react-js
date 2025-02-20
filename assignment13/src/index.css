@@ -1,0 +1,4 @@
+@import "tailwindcss";
+body {
+  @apply bg-[#151515] text-[#f0f0f0] w-full flex flex-col;
+}
