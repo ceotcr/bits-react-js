@@ -4,6 +4,7 @@ import Posts from "./components/Posts"
 import { IPost } from "./libs/interfaces"
 import FullPost from "./components/FullPost"
 import { getAllPosts } from "./libs/posts"
+import PostsByUser from "./components/PostsByUser"
 
 const App = () => {
   const [posts, setPosts] = useState<IPost[] | null>(null)
@@ -31,8 +32,11 @@ const App = () => {
     <div className="p-4 max-w-[1440px] w-full flex flex-col mx-auto gap-8">
       <NewPost setPosts={setPosts} />
       {loading && <p className='w-full text-center'>Loading...</p>}
-      {error && <p className='w-full text-center'>{error}</p>}
-      {posts && <Posts posts={posts} setSelectedPost={setSelectedPost} />}
+      {error && <p className='w-full text-center text-red-300'>{error}</p>}
+      <PostsByUser setPosts={setPosts} />
+      {posts && (
+        posts.length === 0 ? <p className="text-center">No posts by the user</p> : <Posts posts={posts} setSelectedPost={setSelectedPost} />
+      )}
       {selectedPost && <FullPost setPost={setSelectedPost} post={selectedPost} />}
     </div>
   )

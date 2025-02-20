@@ -43,18 +43,14 @@ const NewPost = ({ setPosts }: { setPosts: React.Dispatch<React.SetStateAction<I
             return
         }
 
-        const response = await createPost(data)
-
-        if (response instanceof Error) {
-            setError(response.message)
-        } else {
+        try {
+            const response = await createPost(data)
             setPosts((prev) => {
                 if (prev) {
                     return [{ ...response, id: response.id + Date.now() }, ...prev]
                 }
                 return [response]
-            }
-            )
+            })
             setData({
                 title: "",
                 body: "",
@@ -64,8 +60,16 @@ const NewPost = ({ setPosts }: { setPosts: React.Dispatch<React.SetStateAction<I
             setTimeout(() => {
                 setSuccess(false)
             }, 3000)
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setError(err.message)
+            } else {
+                setError("An unknown error occurred")
+            }
         }
-        setLoading(false)
+        finally {
+            setLoading(false)
+        }
     }
     return (
         <>
@@ -83,7 +87,7 @@ const NewPost = ({ setPosts }: { setPosts: React.Dispatch<React.SetStateAction<I
                     </button>
                 </div>
             </form>
-            {error && <p className="text-red-500 text-center">{error}</p>}
+            {error && <p className="text-red-300 text-center">{error}</p>}
             {success && <p className="text-green-500 text-center">Post created successfully</p>}
         </>
     )
