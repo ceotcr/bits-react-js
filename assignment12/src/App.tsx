@@ -29,7 +29,7 @@ const App = () => {
   }, [])
   return (
     <div className="p-4 max-w-[1440px] w-full flex flex-col mx-auto gap-8">
-      <NewPost />
+      <NewPost setPosts={setPosts} />
       {loading && <p className='w-full text-center'>Loading...</p>}
       {error && <p className='w-full text-center'>{error}</p>}
       {posts && <Posts posts={posts} setSelectedPost={setSelectedPost} />}

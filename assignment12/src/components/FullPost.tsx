@@ -42,12 +42,16 @@ const FullPost = ({ post, setPost }: { post: IPost, setPost: React.Dispatch<Reac
                 <div className='flex flex-col gap-2'>
                     {
                         comments &&
-                        comments.map((comment) => (
-                            <div key={comment.id} className='p-2 bg-[#444444] rounded-lg'>
-                                <p className='font-light'>{comment.body}</p>
-                                <p className='text-xs text-[#A7A7A7] ml-auto text-right'>- {comment.email}</p>
-                            </div>
-                        ))
+                        (
+                            comments.length === 0 ?
+                                <p className='text-center'>No comments available</p> :
+
+                                comments.map((comment) => (
+                                    <div key={comment.id} className='p-2 bg-[#444444] rounded-lg'>
+                                        <p className='font-light'>{comment.body}</p>
+                                        <p className='text-xs text-[#A7A7A7] ml-auto text-right'>- {comment.email}</p>
+                                    </div>
+                                )))
                     }
                 </div>
             </div>

@@ -1,7 +1,8 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import { createPost } from "../libs/posts"
+import { IPost } from "../libs/interfaces"
 
-const NewPost = () => {
+const NewPost = ({ setPosts }: { setPosts: React.Dispatch<React.SetStateAction<IPost[] | null>> }) => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [success, setSuccess] = useState(false)
@@ -47,6 +48,13 @@ const NewPost = () => {
         if (response instanceof Error) {
             setError(response.message)
         } else {
+            setPosts((prev) => {
+                if (prev) {
+                    return [{ ...response, id: response.id + Date.now() }, ...prev]
+                }
+                return [response]
+            }
+            )
             setData({
                 title: "",
                 body: "",
