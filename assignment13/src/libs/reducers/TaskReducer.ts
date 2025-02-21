@@ -1,6 +1,6 @@
-import { ActionType, ITask } from "../types/Tasks";
+import { TaskReducerActionType, ITask } from "../types/Tasks";
 
-export const taskReducer = (state: ITask[], action: ActionType) => {
+export const taskReducer = (state: ITask[], action: TaskReducerActionType) => {
     switch (action.type) {
         case 'ADD_TASK':
             return [...state, { id: Date.now(), title: action.params, done: false }];

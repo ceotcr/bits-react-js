@@ -4,7 +4,7 @@ export interface ITask {
     done: boolean;
 }
 
-export type ActionType =
+export type TaskReducerActionType =
     | { type: "ADD_TASK"; params: string }
     | { type: "DELETE_TASK"; params: number }
     | { type: "TOGGLE_STATUS"; params: number };
