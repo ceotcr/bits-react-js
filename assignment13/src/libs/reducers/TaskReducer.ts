@@ -1,9 +1,4 @@
-import { ITask } from "../interfaces/Tasks";
-
-type ActionType =
-    | { type: "ADD_TASK"; params: string }
-    | { type: "DELETE_TASK"; params: number }
-    | { type: "TOGGLE_STATUS"; params: number };
+import { ActionType, ITask } from "../types/Tasks";
 
 export const taskReducer = (state: ITask[], action: ActionType) => {
     switch (action.type) {

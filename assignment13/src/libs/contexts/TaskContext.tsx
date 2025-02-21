@@ -1,10 +1,9 @@
 import React, { useCallback, useReducer } from "react";
-import { ITask } from "../interfaces/Tasks";
+import { ITask } from "../types/Tasks";
 import { taskReducer } from "../reducers/TaskReducer";
 
 type TaskContextType = {
     tasks: ITask[];
-    // taskDispatch: React.Dispatch<ActionType>;
     addTask: (params: string) => void;
     removeTask: (params: number) => void;
     toggleTask: (params: number) => void;
