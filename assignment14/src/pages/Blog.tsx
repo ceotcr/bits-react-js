@@ -9,9 +9,11 @@ const Blogs = () => {
     const [loading, setLoading] = useState(true)
     const loadPostAndComments = async () => {
         setLoading(true)
+        document.title = 'Blog | Loading...'
         const postResponse = await fetch(`https://jsonplaceholder.typicode.com/posts/${blogid}`)
         const post = await postResponse.json()
         setPost(post)
+        document.title = `Blog | ${post.title}`
         const commentsResponse = await fetch(`https://jsonplaceholder.typicode.com/posts/${blogid}/comments`)
         const comments = await commentsResponse.json()
         setComments(comments)

@@ -9,6 +9,7 @@ const Blogs = () => {
             .then(response => response.json())
             .then(data => setPosts(data))
             .catch(error => console.error(error))
+        document.title = 'Blogs'
     }, [])
     return (
         <div className="w-full flex flex-col items-center gap-4 min-h-[calc(100vh-6rem)] py-4">

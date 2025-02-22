@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSearchParams } from "react-router"
 
 const Home = () => {
@@ -20,6 +20,10 @@ const Home = () => {
             setData({ key: '', value: '' })
         }
     }
+
+    useEffect(() => {
+        document.title = 'Add Search Params'
+    }, [])
     return (
         <div className="w-full flex flex-col py-4 min-h-[calc(100vh-4rem)] items-center justify-center">
             <h1 className="text-4xl font-bold">Add Search Params</h1>
