@@ -21,7 +21,7 @@ const Categories = () => {
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         getCategories().then((cats) => {
-            setCategories(cats)
+            setCategories(cats.reverse())
         }).catch((err) => {
             console.log(err)
         }).finally(() => {

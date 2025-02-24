@@ -13,7 +13,7 @@ export const getCategories = async () => {
 export const getProducts = async ({ limit = 0, category = "" }) => {
     let url = '/products';
     if (category) {
-        url += `?category=${category}`
+        url += `/category/${category}`
     }
     if (limit) {
         url += `?limit=${limit}`
