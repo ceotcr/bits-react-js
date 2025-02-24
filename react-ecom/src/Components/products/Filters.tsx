@@ -12,7 +12,7 @@ const Filters = ({ categories, filters, setFilters }: {
 }) => {
     return (
         <div
-            className="flex sticky top-20 z-50 mt-4 w-full items-end gap-4 bg-[rgba(255,255,255,0.6)] backdrop-blur-lg p-4 rounded-md">
+            className="flex sticky top-20 z-50 w-full items-end gap-4 bg-[rgba(255,255,255,0.6)] backdrop-blur-lg p-4 rounded-md">
             <select
                 value={filters.category}
                 onChange={(e) => setFilters({ ...filters, category: e.target.value })}
