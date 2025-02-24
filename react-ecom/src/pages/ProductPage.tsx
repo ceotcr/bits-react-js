@@ -6,16 +6,17 @@ import { IProduct } from "../libs/interfaces";
 import NotFound from "./NotFound";
 import Loading from "../Components/layout/Loading";
 import { getProduct } from "../libs/APICalls/Products";
+import { useCart } from "../contexts/CartContext";
 
 const ProductPage = () => {
     const [loading, setLoading] = useState(true);
     const [product, setProduct] = useState<IProduct | null>(null);
-
-    const params = useParams()
+    const { add } = useCart()
+    const { id } = useParams()
     const navigate = useNavigate()
     useEffect(() => {
-        if (!params.id) return;
-        getProduct(Number(params.id))
+        if (!id) return;
+        getProduct(Number(id))
             .then((response) => {
                 setProduct(response)
                 setLoading(false)
@@ -24,7 +25,7 @@ const ProductPage = () => {
                 console.log(error)
                 setLoading(false)
             })
-    }, [params.id])
+    }, [id])
 
     if (loading) {
         return (<Loading text="Loading Product..." />);
@@ -46,11 +47,9 @@ const ProductPage = () => {
                 </button>
 
                 <div
-                    id="main-product-container"
-                    className="grid grid-cols-1 md:grid-cols-2 justify-center gap-4 lg:gap-8"
+                    className="grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-4 lg:gap-8"
                 >
                     <img
-                        id="image"
                         src={product.image}
                         className="w-full max-h-[512px] object-top object-cover rounded-md"
                         alt={product.title}
@@ -62,7 +61,9 @@ const ProductPage = () => {
                         </h2>
 
                         <Link to={`/products/?category=${product.category}`} className="flex items-center gap-2">
-                            {product.category}
+                            Category: {
+                                product.category.charAt(0).toUpperCase() + product.category.slice(1)
+                            }
                         </Link>
 
                         <div className="flex items-center gap-2">
@@ -77,7 +78,7 @@ const ProductPage = () => {
                         </p>
 
                         <div className="flex items-center gap-4">
-                            <button className="px-4 py-2 bg-gray-900 text-white w-full cursor-pointer rounded-md">
+                            <button className="px-4 py-2 bg-gray-900 text-white w-full cursor-pointer rounded-md" onClick={() => add(product)}>
                                 Add to Cart
                             </button>
                         </div>

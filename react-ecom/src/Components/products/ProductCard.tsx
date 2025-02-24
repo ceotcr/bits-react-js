@@ -1,10 +1,15 @@
 import { Link } from "react-router"
 import { IProduct } from "../../libs/interfaces"
 import { LiaShoppingBagSolid } from "react-icons/lia"
+import { useCart } from "../../contexts/CartContext"
 
 const ProductCard = (
     { product }: { product: IProduct }
 ) => {
+    const { add } = useCart()
+    const handleAddToCart = () => {
+        add(product)
+    }
     return (
         <div className="group relative overflow-hidden">
             <Link to={`/products/${product.id}`}>
@@ -15,7 +20,7 @@ const ProductCard = (
                     <h3 className="text-lg line-clamp-1 font-medium text-gray-900 group-hover:text-gray-800">{product.title}</h3>
                     <p className="text-sm font-medium text-gray-900">${product.price}</p>
                 </Link>
-                <button className="p-4 w-4-10 rounded-md cursor-pointer add-to-cart">
+                <button className="p-4 w-4-10 rounded-md cursor-pointer add-to-cart" onClick={handleAddToCart}>
                     <span className="sr-only">Add to cart</span>
                     <LiaShoppingBagSolid size={24} />
                 </button>

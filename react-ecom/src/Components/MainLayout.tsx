@@ -1,5 +1,6 @@
 import { Outlet } from "react-router"
 import Header from "./layout/Header"
+import SnackBar from "./layout/SnackBar"
 
 const MainLayout = () => {
     return (
@@ -9,6 +10,7 @@ const MainLayout = () => {
             <footer>
                 Footer
             </footer>
+            <SnackBar />
         </>
     )
 }
