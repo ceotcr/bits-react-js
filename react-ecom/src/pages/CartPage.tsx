@@ -3,13 +3,15 @@ import { useCart } from "../contexts/CartContext";
 import { ICartItem } from "../libs/interfaces";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
+import { useState } from "react";
+import { useSnackbar } from "../contexts/SnackBarContext";
 
 const Cart = () => {
     const { items, getTotal, add, dec, remove, checkout } = useCart();
-
+    const [processing, setProcessing] = useState(false);
     const totals = getTotal();
     const isEmpty = items.length === 0;
-
+    const { showSnackbar } = useSnackbar();
     const handleRemove = (id: number) => remove(id);
     const handleIncrease = (product: ICartItem) => add(product);
     const handleDecrease = (product: ICartItem) => dec(product);
@@ -18,8 +20,12 @@ const Cart = () => {
             alert("Please add products to cart");
             return;
         }
-        checkout();
-        alert("Order placed successfully!");
+        setProcessing(true);
+        setTimeout(() => {
+            checkout();
+            showSnackbar("Checkout successful", 0);
+            setProcessing(false);
+        }, 2000);
     };
 
     return (
@@ -73,7 +79,7 @@ const Cart = () => {
                             <p className="text-lg font-medium text-gray-900">Total</p>
                             <p className="text-lg font-medium text-gray-900">${totals.total}</p>
                         </div>
-                        <button onClick={handleCheckout} className="w-full py-2 text-lg font-semibold text-white bg-black rounded-md hover:opacity-90">
+                        <button onClick={handleCheckout} disabled={processing} className="w-full py-2 text-lg font-semibold text-white bg-black rounded-md hover:opacity-90 disabled:opacity-70 cursor-pointer disabled:cursor-not-allowed">
                             Checkout
                         </button>
                     </div>

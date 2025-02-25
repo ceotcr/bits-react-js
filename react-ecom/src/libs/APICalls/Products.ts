@@ -6,6 +6,9 @@ export const getCategories = async () => {
         url: '/products/categories',
         method: 'GET'
     })
+    if (!response) {
+        throw new Error("Error Fetching Categories")
+    }
     return response
 }
 
@@ -22,6 +25,9 @@ export const getProducts = async ({ limit = 0, category = "" }) => {
         url,
         method: 'GET'
     })
+    if (!response) {
+        throw new Error("Error Fetching Products")
+    }
     return response
 }
 
@@ -31,6 +37,9 @@ export const getProduct = async (id: number) => {
         url: `/products/${id}`,
         method: 'GET'
     })
+    if (!response) {
+        throw new Error("Product Not Found")
+    }
     return response
 }
 
@@ -40,6 +49,9 @@ export const deleteProduct = async (id: number) => {
         url: `/products/${id}`,
         method: 'DELETE'
     })
+    if (!response) {
+        throw new Error("Error Deleting Product")
+    }
     return response
 }
 
@@ -49,6 +61,9 @@ export const addProduct = async (product: IProduct) => {
         method: 'POST',
         data: product
     })
+    if (!response) {
+        throw new Error("Error Adding Product")
+    }
     return response
 }
 
@@ -58,5 +73,8 @@ export const updateProduct = async (product: IProduct) => {
         method: 'PUT',
         data: product
     })
+    if (!response) {
+        throw new Error("Error Updating Product")
+    }
     return response
 }

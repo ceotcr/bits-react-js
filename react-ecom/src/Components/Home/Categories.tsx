@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 import SectionHeading from "../ui/SectionHeading"
 import { getCategories } from "../../libs/APICalls/Products"
 import Loading from "../layout/Loading"
@@ -7,6 +7,7 @@ import electronicImg from "../../assets/categories/electronic.jpg";
 import jeweleryImg from "../../assets/categories/jewelery.jpg";
 import womenImg from "../../assets/categories/women.jpg";
 import menImg from "../../assets/categories/men.jpg";
+import { useQuery } from "@tanstack/react-query"
 
 
 const Categories = () => {
@@ -17,17 +18,12 @@ const Categories = () => {
         "men's clothing": menImg
     }), []);
 
-    const [categories, setCategories] = useState<string[]>([])
-    const [loading, setLoading] = useState(true)
-    useEffect(() => {
-        getCategories().then((cats) => {
-            setCategories(cats.reverse())
-        }).catch((err) => {
-            console.log(err)
-        }).finally(() => {
-            setLoading(false)
-        })
-    }, [])
+    const { data: categories, isLoading, isError, error } = useQuery({
+        queryKey: ["categories"],
+        queryFn: getCategories,
+        retry: 1,
+        refetchOnWindowFocus: false,
+    })
 
     return (
         <section className="px-6 py-16 lg:px-8 w-full">
@@ -38,13 +34,27 @@ const Categories = () => {
                     </SectionHeading>
                 </div>
                 <div className="grid sm:grid-cols-2 grid-cols-1 w-full items-center gap-4 mt-8" id="categories">
-                    {loading && <Loading text="Curating Categories..." />}
-                    {categories.map((cat, index) => (
+                    {isLoading && <Loading text="Curating Categories..." />}
+                    {!isLoading && categories?.map((cat, index) => (
                         <CategoryCard key={index} category={{
                             name: cat,
                             image: catImages[cat as keyof typeof catImages]
                         }} />
                     ))}
+                    {
+                        !isLoading && categories?.length === 0 && (
+                            <div className="w-full flex items-center justify-center text-center text-lg col-span-full font-medium">
+                                No Categories Found
+                            </div>
+                        )
+                    }
+
+                    {isError && (
+                        <div className="w-full items-center justify-center col-span-full text-center text-lg font-medium">
+                            {error?.message || "Failed to fetch categories"}
+                        </div>
+                    )}
+
                 </div>
             </div>
         </section>

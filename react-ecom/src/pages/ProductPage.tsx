@@ -1,32 +1,25 @@
-import { useEffect, useState } from "react";
 import { MdArrowBack } from "react-icons/md";
 import RatingStars from "../Components/products/RatingStars";
 import { Link, useNavigate, useParams } from "react-router";
-import { IProduct } from "../libs/interfaces";
 import NotFound from "./NotFound";
 import Loading from "../Components/layout/Loading";
 import { getProduct } from "../libs/APICalls/Products";
 import { useCart } from "../contexts/CartContext";
+import { useQuery } from "@tanstack/react-query";
 
 const ProductPage = () => {
-    const [loading, setLoading] = useState(true);
-    const [product, setProduct] = useState<IProduct | null>(null);
     const { add } = useCart()
     const { id } = useParams()
     const navigate = useNavigate()
-    useEffect(() => {
-        if (!id) return;
-        getProduct(Number(id))
-            .then((response) => {
-                setProduct(response)
-                setLoading(false)
-            })
-            .catch((error) => {
-                console.log(error)
-                setLoading(false)
-            })
-    }, [id])
-
+    if (!id) {
+        navigate('/404')
+    }
+    const { data: product, isLoading: loading } = useQuery({
+        queryKey: ['product', id],
+        queryFn: () => getProduct(Number(id)),
+        refetchOnWindowFocus: false,
+        retry: 1
+    })
     if (loading) {
         return (<Loading text="Loading Product..." />);
     }
