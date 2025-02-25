@@ -6,7 +6,7 @@ import { useAuth } from "../../contexts/AuthContext"
 import { MdDelete, MdEdit } from "react-icons/md"
 
 const ProductCard = (
-    { product, isAdmin = false, onEdit, onDelete }: { product: IProduct; isAdmin?: boolean, onEdit: () => void, onDelete: () => void }
+    { product, isAdmin = false, onEdit, onDelete }: { product: IProduct; isAdmin?: boolean, onEdit?: () => void, onDelete?: () => void }
 ) => {
     const { add } = useCart()
     const { isAuthenticated } = useAuth()
