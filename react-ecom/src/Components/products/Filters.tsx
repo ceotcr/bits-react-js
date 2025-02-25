@@ -1,15 +1,34 @@
+import { useSearchParams } from "react-router";
 import { Sort } from "../../libs/interfaces";
+import { useEffect } from "react";
+import { getCategories } from "../../libs/APICalls/Products";
+import { useQuery } from "@tanstack/react-query";
 
-const Filters = ({ categories, filters, setFilters }: {
-    categories: string[], filters: {
+const Filters = ({ filters, setFilters }: {
+    filters: { category: string; sort: Sort },
+    setFilters: React.Dispatch<React.SetStateAction<{
         category: string;
         sort: Sort;
-    },
-    setFilters: (filters: {
-        category: string;
-        sort: Sort;
-    }) => void;
+    }>>
 }) => {
+    const [searchParams] = useSearchParams();
+
+    const { data: categories } = useQuery({
+        queryKey: ['categories'],
+        queryFn: () => getCategories(),
+        refetchOnWindowFocus: false,
+        retry: 1,
+    })
+
+    useEffect(() => {
+        const category = searchParams.get('category') || "all"
+        if (!categories) return
+        if (category && categories.includes(category)) {
+            setFilters((prev) => ({ ...prev, category: category === 'all' ? '' : category }));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [categories, searchParams]);
+
     return (
         <div
             className="flex sticky top-20 z-50 w-full items-end gap-4 bg-[rgba(255,255,255,0.6)] backdrop-blur-lg p-4 rounded-md">
@@ -18,7 +37,7 @@ const Filters = ({ categories, filters, setFilters }: {
                 onChange={(e) => setFilters({ ...filters, category: e.target.value })}
                 className="p-2 border border-gray-300 bg-white rounded-md">
                 <option value="all">Category</option>
-                {categories.map((category) => (
+                {categories?.map((category) => (
                     <option key={category} value={category}>{category}</option>
                 ))}
             </select>

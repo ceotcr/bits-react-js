@@ -1,13 +1,20 @@
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { IProduct } from "../../libs/interfaces"
 import { LiaShoppingBagSolid } from "react-icons/lia"
 import { useCart } from "../../contexts/CartContext"
+import { useAuth } from "../../contexts/AuthContext"
 
 const ProductCard = (
     { product }: { product: IProduct }
 ) => {
     const { add } = useCart()
+    const { isAuthenticated } = useAuth()
+    const navigate = useNavigate()
     const handleAddToCart = () => {
+        if (!isAuthenticated) {
+            navigate('/login')
+            return
+        }
         add(product)
     }
     return (

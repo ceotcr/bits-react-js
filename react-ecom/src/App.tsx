@@ -3,6 +3,7 @@ import AppRoutes from "./Components/AppRoutes"
 import { CartProvider } from "./contexts/CartContext"
 import { SnackbarProvider } from "./contexts/SnackBarContext"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { AuthProvider } from "./contexts/AuthContext"
 const queryClient = new QueryClient()
 function App() {
   return (
@@ -10,9 +11,11 @@ function App() {
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <SnackbarProvider>
-            <CartProvider>
-              <AppRoutes />
-            </CartProvider>
+            <AuthProvider>
+              <CartProvider>
+                <AppRoutes />
+              </CartProvider>
+            </AuthProvider>
           </SnackbarProvider>
         </QueryClientProvider>
       </BrowserRouter>

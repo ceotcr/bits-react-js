@@ -6,6 +6,7 @@ import Loading from "../Components/layout/Loading";
 import { getProduct } from "../libs/APICalls/Products";
 import { useCart } from "../contexts/CartContext";
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../contexts/AuthContext";
 
 const ProductPage = () => {
     const { add } = useCart()
@@ -14,6 +15,7 @@ const ProductPage = () => {
     if (!id) {
         navigate('/404')
     }
+    const { isAuthenticated } = useAuth()
     const { data: product, isLoading: loading } = useQuery({
         queryKey: ['product', id],
         queryFn: () => getProduct(Number(id)),
@@ -23,7 +25,7 @@ const ProductPage = () => {
     if (loading) {
         return (<Loading text="Loading Product..." />);
     }
-    if (!product) {
+    else if (!product) {
         return (
             <NotFound isProduct />
         )
@@ -71,7 +73,12 @@ const ProductPage = () => {
                         </p>
 
                         <div className="flex items-center gap-4">
-                            <button className="px-4 py-2 bg-gray-900 text-white w-full cursor-pointer rounded-md" onClick={() => add(product)}>
+                            <button className="px-4 py-2 bg-gray-900 text-white w-full cursor-pointer rounded-md" onClick={() => {
+                                if (!isAuthenticated) {
+                                    navigate('/login')
+                                }
+                                add(product)
+                            }}>
                                 Add to Cart
                             </button>
                         </div>

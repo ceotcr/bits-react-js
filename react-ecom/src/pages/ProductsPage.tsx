@@ -1,35 +1,18 @@
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import SectionHeading from "../Components/ui/SectionHeading"
 import { Sort } from "../libs/interfaces"
-import { getCategories, getProducts } from "../libs/APICalls/Products"
-import { useSearchParams } from "react-router"
+import { getProducts } from "../libs/APICalls/Products"
 import Loading from "../Components/layout/Loading"
 import ProductCard from "../Components/products/ProductCard"
 import Filters from "../Components/products/Filters"
 import { useQuery } from "@tanstack/react-query"
 
 const ProductsPage = () => {
-    const [categories, setCategories] = useState<string[]>([])
     const [filters, setFilters] = useState<{ category: string; sort: Sort }>({
         category: "",
         sort: Sort.DEFAULT,
     })
-    const [searchParams] = useSearchParams()
 
-    useEffect(() => {
-        getCategories()
-            .then((response) => {
-                setCategories(response)
-                const category = searchParams.get('category') || ""
-                if (category && categories.includes(category)) {
-                    setFilters({ ...filters, category })
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
     const { data: products, error, isLoading: loading } = useQuery({
         queryKey: ['products', filters.category],
         queryFn: () => getProducts({ category: filters.category === "all" ? "" : filters.category }),
@@ -61,7 +44,7 @@ const ProductsPage = () => {
                     Shop faster, Shop Smarter
                 </SectionHeading>
 
-                <Filters categories={categories} filters={filters} setFilters={setFilters} />
+                <Filters filters={filters} setFilters={setFilters} />
 
                 {loading && (
 
@@ -79,17 +62,13 @@ const ProductsPage = () => {
                 }
                 {
                     !error && !loading && products &&
-                        products.length > 0 ? (
+                    products.length > 0 && (
                         <div className="w-full mx-auto max-w-[1440px] grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                             {
                                 sortedProducts.map((product) => (
                                     <ProductCard key={product.id} product={product} />
                                 ))
                             }
-                        </div>
-                    ) : (
-                        <div className="w-full mx-auto max-w-[1440px] flex flex-col items-center gap-4 min-h-screen">
-                            <h1 className="text-2xl font-bold text-center">No Products Found</h1>
                         </div>
                     )
                 }
