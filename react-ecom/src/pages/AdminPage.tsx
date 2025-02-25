@@ -9,6 +9,7 @@ import AddOrEditProduct from "../Components/admin/AddOrEditProduct"
 import { deleteProduct } from "../libs/APICalls/Admin"
 import { useSnackbar } from "../contexts/SnackBarContext"
 import { Link } from "react-router"
+import { useMutation } from "@tanstack/react-query"
 
 const AdminPage = () => {
     const { isAuthenticated } = useAuth()
@@ -51,15 +52,21 @@ const AdminPage = () => {
         },
         [products, filters.sort]
     )
-    const handleDelete = async (id: number) => {
-        try {
-            await deleteProduct(id)
-            setProducts((prev) => prev.filter((p) => p.id !== id))
-            showSnackbar("Product Deleted Successfully", 0)
-        } catch (error) {
-            showSnackbar("Error Deleting Product", 2)
-        }
-    }
+    const deleteMutation = useMutation({
+        mutationFn: async (id: number) => await deleteProduct(id),
+        onSuccess: (_, id) => {
+            setProducts((prev) => prev.filter((p) => p.id !== id));
+            showSnackbar("Product Deleted Successfully", 0);
+        },
+        onError: () => {
+            showSnackbar("Error Deleting Product", 2);
+        },
+    });
+
+    const handleDelete = (id: number) => {
+        deleteMutation.mutate(id);
+    };
+
     if (!isAuthenticated) {
         return (
             <section className="p-6 w-full">

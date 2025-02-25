@@ -3,7 +3,7 @@ import { useCart } from "../contexts/CartContext";
 import { ICartItem } from "../libs/interfaces";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { MdClose } from "react-icons/md";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useSnackbar } from "../contexts/SnackBarContext";
 
 const Cart = () => {
@@ -12,12 +12,12 @@ const Cart = () => {
     const totals = getTotal();
     const isEmpty = items.length === 0;
     const { showSnackbar } = useSnackbar();
-    const handleRemove = (id: number) => remove(id);
-    const handleIncrease = (product: ICartItem) => add(product);
-    const handleDecrease = (product: ICartItem) => dec(product);
-    const handleCheckout = () => {
+    const handleRemove = useCallback((id: number) => remove(id), [remove]);
+    const handleIncrease = useCallback((product: ICartItem) => add(product), [add]);
+    const handleDecrease = useCallback((product: ICartItem) => dec(product), [dec]);
+    const handleCheckout = useCallback(() => {
         if (items.length === 0) {
-            alert("Please add products to cart");
+            showSnackbar("Your cart is empty", 1);
             return;
         }
         setProcessing(true);
@@ -26,7 +26,7 @@ const Cart = () => {
             showSnackbar("Checkout successful", 0);
             setProcessing(false);
         }, 2000);
-    };
+    }, [checkout, items.length, showSnackbar]);
 
     return (
         <section className="p-6 w-full">
