@@ -8,6 +8,7 @@ import ProductCard from "../Components/products/ProductCard"
 import AddOrEditProduct from "../Components/admin/AddOrEditProduct"
 import { deleteProduct } from "../libs/APICalls/Admin"
 import { useSnackbar } from "../contexts/SnackBarContext"
+import { Link } from "react-router"
 
 const AdminPage = () => {
     const { isAuthenticated } = useAuth()
@@ -61,7 +62,15 @@ const AdminPage = () => {
     }
     if (!isAuthenticated) {
         return (
-            <div>Not Authorized</div>
+            <section className="p-6 w-full">
+                <div className="w-full mx-auto max-w-[1440px] items-center min-h-[calc(100vh-10rem)] justify-center gap-4 h-fit flex flex-col">
+                    <h1 className="text-2xl font-semibold text-gray-900">Unauthorized Access</h1>
+                    <h2 className="text-lg font-semibold text-gray-900">Please Login to view this page</h2>
+                    <Link to="/login" className="text-white bg-gray-900 p-2 rounded-md">
+                        Login
+                    </Link>
+                </div>
+            </section>
         )
     }
     return (
