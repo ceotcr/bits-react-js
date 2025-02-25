@@ -6,6 +6,7 @@ import ProductPage from "../pages/ProductPage"
 import NotFound from "../pages/NotFound"
 import CartPage from "../pages/CartPage"
 import AuthPage from "../pages/AuthPage"
+import AdminPage from "../pages/AdminPage"
 
 const AppRoutes = () => {
     return (
@@ -16,6 +17,7 @@ const AppRoutes = () => {
                 <Route path="/products/:id" element={<ProductPage />} />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/login" element={<AuthPage />} />
+                <Route path="/admin" element={<AdminPage />} />
                 <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
