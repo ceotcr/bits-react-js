@@ -23,11 +23,19 @@ const ProductPage = () => {
         retry: 1
     })
     if (loading) {
-        return (<Loading text="Loading Product..." />);
+        return (
+            <section className="p-6 w-full">
+                <div className="w-full mx-auto max-w-[1440px] flex flex-col items-center justify-center gap-4 min-h-[calc(100vh-160px)]">
+                    <Loading text="Loading Product..." />
+                </div>
+            </section>);
     }
     else if (!product) {
         return (
-            <NotFound isProduct />
+            <section className="p-6 w-full">
+                <div className="w-full mx-auto max-w-[1440px] flex flex-col items-center justify-center gap-4 min-h-[calc(100vh-160px)]">
+                    <NotFound isProduct /></div>
+            </section>
         )
     }
 
