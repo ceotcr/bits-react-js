@@ -14,9 +14,9 @@ export const SnackbarProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const [isShowing, setIsShowing] = useState(false);
     const [message, setMessage] = useState("");
     const [status, setStatus] = useState<Status>(Status.SUCCESS);
-    const showSnackbar = useCallback((msg: string) => {
+    const showSnackbar = useCallback((msg: string, status: Status) => {
         setMessage(msg);
-        setStatus(Status.SUCCESS);
+        setStatus(status);
         setIsShowing(true);
         setTimeout(() => setIsShowing(false), 3000); // Auto-hide after 3 seconds
     }, []);
