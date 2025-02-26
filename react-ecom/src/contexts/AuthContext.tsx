@@ -1,8 +1,13 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { useSnackbar } from "./SnackBarContext";
 
+interface UserState {
+    id: string | null;
+    token: string | null;
+}
+
 interface AuthContextType {
-    user: { id: string | null; token: string | null };
+    user: UserState;
     login: (username: string, password: string) => Promise<boolean>;
     logout: () => void;
     isAuthenticated: boolean;
@@ -10,15 +15,26 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const initialState: UserState = (() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : { id: null, token: null };
+})();
+
+const authReducer = (state: UserState, action: { type: string; payload?: UserState }) => {
+    switch (action.type) {
+        case "LOGIN":
+            return action.payload || state;
+        case "LOGOUT":
+            return { id: null, token: null };
+        default:
+            return state;
+    }
+};
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const [user, setUser] = useState<{ id: string | null; token: string | null }>(
-        () => {
-            const storedUser = localStorage.getItem("user");
-            return storedUser ? JSON.parse(storedUser) : { id: null, token: null };
-        }
-    );
+    const [state, dispatch] = useReducer(authReducer, initialState);
     const { showSnackbar } = useSnackbar();
-    const isAuthenticated = !!user.token;
+    const isAuthenticated = !!state.token;
 
     const login = async (username: string, password: string) => {
         try {
@@ -37,7 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             const decoded = decodeToken(data.token);
             const newUser = { id: decoded.sub, token: data.token };
 
-            setUser(newUser);
+            dispatch({ type: "LOGIN", payload: newUser });
             localStorage.setItem("user", JSON.stringify(newUser));
             showSnackbar("Login successful", 0);
 
@@ -49,13 +65,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const logout = () => {
-        setUser({ id: null, token: null });
+        dispatch({ type: "LOGOUT" });
         localStorage.removeItem("user");
         showSnackbar("Logged out successfully", 0);
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
+        <AuthContext.Provider value={{ user: state, login, logout, isAuthenticated }}>
             {children}
         </AuthContext.Provider>
     );
