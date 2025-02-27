@@ -1,6 +1,10 @@
+import AppRoutes from './AppRoutes'
+import Providers from './Providers'
 const App = () => {
   return (
-    <div>App</div>
+    <Providers>
+      <AppRoutes />
+    </Providers>
   )
 }
 
