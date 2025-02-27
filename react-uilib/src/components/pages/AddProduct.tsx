@@ -3,6 +3,7 @@ import { useProduct } from "../../lib/contexts/ProductsContext.tsx";
 import { toast } from "sonner";
 import { IProduct } from "../../lib/interfaces";
 import ProductForm from "../custom/products/ProductForm";
+import { useNavigate } from "react-router";
 
 const AddProduct = () => {
     const { addNewProduct } = useProduct();
@@ -14,6 +15,8 @@ const AddProduct = () => {
         image: "",
     });
 
+    const navigate = useNavigate();
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!formData.title || !formData.price || !formData.category || !formData.image || !formData.description) {
@@ -21,8 +24,8 @@ const AddProduct = () => {
             return;
         }
         addNewProduct(formData);
-        toast.success("Product added successfully!");
         setFormData({ title: "", description: "", price: 0, category: "", image: "" });
+        navigate("/products");
     };
 
     return (
