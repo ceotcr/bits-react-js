@@ -47,7 +47,7 @@ const UpdateProduct = () => {
             return;
         }
         updateExistingProduct(formData);
-        navigate(`/products/${productId}`);
+        navigate(`/products/`);
     };
 
     return (
