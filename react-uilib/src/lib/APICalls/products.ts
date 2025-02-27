@@ -45,3 +45,28 @@ export const getProduct = async (id: number) => {
     }
     return response
 }
+
+
+export const addProduct = async (product: Partial<IProduct>) => {
+    const response = await callApi<Partial<IProduct>, IProduct>({
+        url: '/products',
+        method: 'POST',
+        data: product
+    })
+    if (!response) {
+        throw new Error("Error Adding Product")
+    }
+    return response
+}
+
+export const updateProduct = async (product: Partial<IProduct>) => {
+    const response = await callApi<Partial<IProduct>, IProduct>({
+        url: `/products/${product.id}`,
+        method: 'PUT',
+        data: product
+    })
+    if (!response) {
+        throw new Error("Error Updating Product")
+    }
+    return response
+}

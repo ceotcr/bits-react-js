@@ -21,7 +21,7 @@ const Filters = ({ changeCategory, changeSort, changeLimit, filters }: {
 
     return (
         <div
-            className="flex sticky top-20 z-50 w-full items-center gap-4 bg-[rgba(255,255,255,0.6)] backdrop-blur-lg p-4 rounded-md">
+            className="flex sticky top-0 z-50 w-full items-center gap-4 bg-[rgba(255,255,255,0.6)] backdrop-blur-lg p-4 rounded-md">
             <Select onValueChange={(value) => changeCategory(value as string)}>
                 <SelectTrigger>
                     <SelectValue placeholder={filters.category.charAt(0).toUpperCase() + filters.category.slice(1)} />

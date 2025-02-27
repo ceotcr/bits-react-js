@@ -22,7 +22,7 @@ const Product = () => {
                     <div>Error: {error.message}</div>
                 ) :
                     product && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                             <div>
                                 <img src={product.image} alt={product.title} className="w-full rounded-lg object-cover object-top max-h-[512px]" />
                             </div>

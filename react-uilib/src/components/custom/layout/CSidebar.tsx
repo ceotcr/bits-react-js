@@ -9,10 +9,11 @@ const CSidebar = () => {
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
-                    <nav className="flex flex-col gap-2">
-                        <NavLink to="/" className={(({ isActive }) => isActive ? "text-black" : "text-slate-700")}>Home</NavLink>
-                        <NavLink to="/products" className={(({ isActive }) => isActive ? "text-black" : "text-slate-700")}>Products</NavLink>
-                    </nav>
+                    <NavLink to="/" className={(({ isActive }) => isActive ? "text-black" : "text-slate-700")}>Home</NavLink>
+                </SidebarGroup>
+                <SidebarGroup className="flex flex-col gap-2">
+                    <NavLink to="/products" className={(({ isActive }) => isActive ? "text-black" : "text-slate-700")}>Products</NavLink>
+                    <NavLink to="/products/add" className={(({ isActive }) => isActive ? "text-black ml-4" : "text-slate-700 ml-4")}>Add Product</NavLink>
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>
