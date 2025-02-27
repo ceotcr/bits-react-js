@@ -16,6 +16,7 @@ const Products = () => {
         queryKey: ['products', filters.category, filters.sort, filters.limit],
         queryFn: () => getProducts(filters),
         refetchOnWindowFocus: false,
+        refetchOnMount: false,
         retry: 1,
     })
 
