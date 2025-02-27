@@ -130,6 +130,14 @@ body {
   font-family: "Raleway", sans-serif;
 }
 
+.font-serif {
+  font-family: "Inria Serif", serif;
+}
+
+.font-sans {
+  font-family: "Raleway", sans-serif;
+}
+
 h1,
 h2,
 h3,

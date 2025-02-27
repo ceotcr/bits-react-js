@@ -4,10 +4,14 @@ import { Card, CardContent, CardTitle } from "../../ui/card"
 import { Button } from "../../ui/button"
 import { Link, useNavigate } from "react-router"
 
-const CProductCard = ({ product }: {
-    product: IProduct
+const CProductCard = ({ product,
+    handleDelete
+}: {
+    product: IProduct,
+    handleDelete: () => void
 }) => {
     const navigate = useNavigate()
+
     return (
         <Link to={`/products/${product.id}`} className="w-full h-full">
             <Card className="bg-white shadow-none relative p-0 rounded-lg">
@@ -26,7 +30,9 @@ const CProductCard = ({ product }: {
                     <Button className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 cursor-pointer w-10 h-10" onClick={(e) => {
                         e.preventDefault()
                         e.stopPropagation()
-                    }}>
+                        handleDelete()
+                    }
+                    }>
                         <Trash size={24} fill="white" />
                     </Button>
                     <CardTitle className="absolute bottom-0 left-0 text-left right-0 p-4 text-white rounded-b-lg">

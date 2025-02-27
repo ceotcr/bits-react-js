@@ -70,3 +70,14 @@ export const updateProduct = async (product: Partial<IProduct>) => {
     }
     return response
 }
+
+export const deleteProduct = async (id: number) => {
+    const response = await callApi<undefined, undefined>({
+        url: `/products/${id}`,
+        method: 'DELETE'
+    })
+    if (!response) {
+        throw new Error("Error Deleting Product")
+    }
+    return response
+}
