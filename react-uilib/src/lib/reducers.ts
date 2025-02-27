@@ -1,6 +1,6 @@
-import { FilterState, FilterAction } from "./interfaces";
+import { IFilterState, IFilterAction } from "./interfaces";
 
-export const filterReducer = (state: FilterState, action: FilterAction): FilterState => {
+export const filterReducer = (state: IFilterState, action: IFilterAction): IFilterState => {
     switch (action.type) {
         case 'SET_CATEGORY':
             return {

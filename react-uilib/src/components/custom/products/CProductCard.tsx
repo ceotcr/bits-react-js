@@ -3,6 +3,7 @@ import { IProduct } from "../../../lib/interfaces"
 import { Card, CardContent, CardTitle } from "../../ui/card"
 import { Button } from "../../ui/button"
 import { Link, useNavigate } from "react-router"
+import { useCartStore } from "@/store/cartStore"
 
 const CProductCard = ({ product,
     handleDelete
@@ -11,7 +12,7 @@ const CProductCard = ({ product,
     handleDelete: () => void
 }) => {
     const navigate = useNavigate()
-
+    const { addToCart } = useCartStore()
     return (
         <Link to={`/products/${product.id}`} className="w-full h-full">
             <Card className="bg-white shadow-none relative p-0 rounded-lg">
@@ -27,7 +28,7 @@ const CProductCard = ({ product,
                     }}>
                         <Pen size={24} fill="white" />
                     </Button>
-                    <Button className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 cursor-pointer w-10 h-10" onClick={(e) => {
+                    <Button className="absolute top-2 left-16 bg-red-500 hover:bg-red-600 cursor-pointer w-10 h-10" onClick={(e) => {
                         e.preventDefault()
                         e.stopPropagation()
                         handleDelete()
@@ -35,8 +36,18 @@ const CProductCard = ({ product,
                     }>
                         <Trash size={24} fill="white" />
                     </Button>
+
+                    <Button className="bg-blue-500 hover:bg-blue-600 cursor-pointer absolute top-2 right-2"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            addToCart(product)
+                        }}>
+                        Add to Cart
+                    </Button>
                     <CardTitle className="absolute bottom-0 left-0 text-left right-0 p-4 text-white rounded-b-lg">
                         {product.title}
+
                     </CardTitle>
                 </CardContent>
             </Card>

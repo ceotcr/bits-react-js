@@ -1,3 +1,4 @@
+import { toast } from "sonner"
 import { callApi } from "../Generics"
 import { IProduct } from "../interfaces"
 
@@ -7,6 +8,7 @@ export const getCategories = async () => {
         method: 'GET'
     })
     if (!response) {
+        toast.error("Error Fetching Categories")
         throw new Error("Error Fetching Categories")
     }
     return response
@@ -29,6 +31,7 @@ export const getProducts = async ({ limit = 0, category = "", sort = "asc" }) =>
         method: 'GET'
     })
     if (!response) {
+        toast.error("Error Fetching Products")
         throw new Error("Error Fetching Products")
     }
     return response
@@ -41,6 +44,7 @@ export const getProduct = async (id: number) => {
         method: 'GET'
     })
     if (!response) {
+        toast.error("Product Not Found")
         throw new Error("Product Not Found")
     }
     return response
@@ -54,6 +58,7 @@ export const addProduct = async (product: Partial<IProduct>) => {
         data: product
     })
     if (!response) {
+        toast.error("Error Adding Product")
         throw new Error("Error Adding Product")
     }
     return response
@@ -66,6 +71,7 @@ export const updateProduct = async (product: Partial<IProduct>) => {
         data: product
     })
     if (!response) {
+        toast.error("Error Updating Product")
         throw new Error("Error Updating Product")
     }
     return response
@@ -77,6 +83,7 @@ export const deleteProduct = async (id: number) => {
         method: 'DELETE'
     })
     if (!response) {
+        toast.error("Error Deleting Product")
         throw new Error("Error Deleting Product")
     }
     return response

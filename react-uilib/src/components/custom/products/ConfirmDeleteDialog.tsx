@@ -11,10 +11,10 @@ const ConfirmDeleteDialog = ({ open, onClose, onConfirm }: ConfirmDeleteDialogPr
         <AlertDialog open={open} onOpenChange={(open) => !open && onClose()}>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle className="font-sans">Delete Product</AlertDialogTitle>
+                    <AlertDialogTitle className="font-sans">Delete Item</AlertDialogTitle>
                 </AlertDialogHeader>
                 <AlertDialogDescription>
-                    Are you sure you want to delete this product?
+                    Are you sure you want to delete this item?
                 </AlertDialogDescription>
                 <AlertDialogFooter>
                     <AlertDialogCancel className="cursor-pointer">Cancel</AlertDialogCancel>

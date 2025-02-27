@@ -3,19 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { addProduct, updateProduct, deleteProduct, getProducts } from "../../lib/APICalls/products";
 import { toast } from "sonner";
 import { filterReducer } from "../../lib/reducers";
-
-interface IProduct {
-    id: number;
-    title: string;
-    price: number;
-    category: string;
-    description: string;
-    image: string;
-    rating: {
-        rate: number;
-        count: number;
-    };
-}
+import { IProduct } from "../interfaces";
 
 interface ProductContextType {
     products: IProduct[];
