@@ -54,18 +54,18 @@ const Cart = () => {
                         }
                     </div>
             }
-            {
-                isAuthenticated && cart.length > 0 &&
+            {cart.length > 0
+                && (
+                    isAuthenticated ?
 
-                <Button className="mt-4 bg-blue-500 hover:bg-blue-600 hover:text-white cursor-pointer text-white"
-                    onClick={handleCreateOrder}>Checkout</Button>
-            }
-            {
-                !isAuthenticated && (
-                    <div className="mt-4">
-                        <h2 className="text-xl font-medium">Please login to checkout</h2>
-                        <Link to="/login" className="text-blue-500">Login</Link>
-                    </div>
+                        <Button className="mt-4 bg-blue-500 hover:bg-blue-600 hover:text-white cursor-pointer text-white"
+                            onClick={handleCreateOrder}>Checkout</Button>
+                        : (
+                            <div className="mt-4">
+                                <h2 className="text-xl font-medium">Please login to checkout</h2>
+                                <Link to="/login" className="text-blue-500">Login</Link>
+                            </div>
+                        )
                 )
             }
         </div>
