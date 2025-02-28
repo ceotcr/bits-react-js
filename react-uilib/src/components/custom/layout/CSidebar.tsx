@@ -7,7 +7,7 @@ import { useOrderStore } from "@/store/ordersStore"
 
 const CSidebar = () => {
     const { isAuthenticated, logout } = useAuthStore()
-    const { cart } = useCartStore()
+    const { cart, clearCart } = useCartStore()
     const { orders } = useOrderStore()
     return (
         <Sidebar className="pl-2">
@@ -52,7 +52,12 @@ const CSidebar = () => {
             <SidebarFooter>
                 {
                     isAuthenticated ? (
-                        <Button variant="outline" onClick={logout} className="cursor-pointer">
+                        <Button variant="outline" onClick={
+                            () => {
+                                logout()
+                                clearCart()
+                            }
+                        } className="cursor-pointer">
                             Logout
                         </Button>
                     ) : (
