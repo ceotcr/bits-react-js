@@ -14,12 +14,14 @@ export const useCartStore = create<ICartStore>((set) => ({
         set((state) => {
             const existingItem = state.cart.find((item) => item.id === product.id)
             if (existingItem) {
+                toast.success("Product quantity increased")
                 return {
                     cart: state.cart.map((item) =>
                         item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
                     ),
                 }
             }
+            toast.success("Product added to cart")
             return { cart: [...state.cart, { ...product, quantity: 1 }] }
         })
     },
