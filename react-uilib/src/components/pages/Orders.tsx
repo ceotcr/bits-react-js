@@ -1,5 +1,5 @@
 import { useOrderStore } from "@/store/ordersStore"
-import { useAuthStore } from "@/store/userStore"
+import { useAuthStore } from "@/store/authStore"
 import { Link } from "react-router"
 import ConfirmDeleteDialog from "../custom/products/ConfirmDeleteDialog"
 import { useState } from "react"

@@ -1,4 +1,4 @@
-import { useAuthStore } from "@/store/userStore"
+import { useAuthStore } from "@/store/authStore"
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";

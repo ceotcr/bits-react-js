@@ -3,7 +3,7 @@ import { Card, CardContent, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
 import { Link } from "react-router"
 import { useOrderStore } from "@/store/ordersStore"
-import { useAuthStore } from "@/store/userStore"
+import { useAuthStore } from "@/store/authStore"
 import { toast } from "sonner"
 const Cart = () => {
     const { cart, incQuantity, decQuantity, removeFromCart, clearCart } = useCartStore()

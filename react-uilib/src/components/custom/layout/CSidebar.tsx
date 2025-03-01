@@ -1,6 +1,6 @@
 import { NavLink } from "react-router"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } from "../../ui/sidebar"
-import { useAuthStore } from "@/store/userStore"
+import { useAuthStore } from "@/store/authStore"
 import { Button } from "@/components/ui/button"
 import { useCartStore } from "@/store/cartStore"
 import { useOrderStore } from "@/store/ordersStore"
