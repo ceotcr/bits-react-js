@@ -8,6 +8,10 @@ import UpdateProduct from "./components/pages/UpdateProduct"
 import Login from "./components/pages/Login"
 import Cart from "./components/pages/Cart"
 import Orders from "./components/pages/Orders"
+import Users from "./components/pages/Users"
+import AddUser from "./components/pages/AddUser"
+import UpdateUser from "./components/pages/UpdateUser"
+import { User } from "lucide-react"
 
 const AppRoutes = () => {
     return (
@@ -22,6 +26,11 @@ const AppRoutes = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="*" element={"Not Found"} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/users/add" element={<AddUser />} />
+                <Route path="/users/:id" element={<User />} />
+                <Route path="/users/:id/edit" element={<UpdateUser />} />
+
             </Route>
         </Routes>
     )

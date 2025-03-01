@@ -1,3 +1,5 @@
+import { User } from "./schema/usersSchema"
+
 export interface IProduct {
     id: number
     title: string
@@ -60,4 +62,13 @@ export interface IOrderStore {
 export interface IOrderProduct {
     productId: number;
     quantity: number;
+}
+
+export interface IUsersStore {
+    users: User[];
+    loadUsers: () => Promise<void>;
+    getUser: (id: number) => Promise<User>;
+    addUser: (user: User) => Promise<void>;
+    deleteUser: (id: number) => Promise<void>;
+    updateUser: (user: User) => Promise<void>;
 }

@@ -8,20 +8,28 @@ export const useOrderStore = create<IOrderStore>((set) => ({
     clearOrders: () => set({ orders: [] }),
     getOrder: async (id: number) => {
         const order = await getOrder(id);
+        if (!order) {
+            throw new Error("Error Fetching Order");
+        }
         return order;
     },
     loadOrders: async (userId: number) => {
         const orders = await getOrders(userId);
-        set({ orders });
+        if (orders)
+            set({ orders });
     },
     addOrder: async (items, userId) => {
         const response = await createOrder(items, userId);
-        set((state) => ({ orders: [...state.orders, response] }));
-        toast.success("Order Created Successfully");
+        if (response) {
+            set((state) => ({ orders: [...state.orders, response] }));
+            toast.success("Order Created Successfully");
+        }
     },
     deleteOrder: async (id: number) => {
         const response = await deleteOrder(id);
-        set((state) => ({ orders: state.orders.filter((order) => order.id !== response.id) }));
-        toast.success("Order Deleted Successfully");
+        if (response) {
+            set((state) => ({ orders: state.orders.filter((order) => order.id !== response.id) }));
+            toast.success("Order Deleted Successfully");
+        }
     }
 }));
